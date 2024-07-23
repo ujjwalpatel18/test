@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            margin: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-info span {
+            margin-right: 10px;
+        }
+        .header .logout {
+            margin-left: 20px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="header">
+            <h1>Welcome to Admin Dashboard</h1>
+            <div class="user-info">
+                <span id="loggedInUser"></span>
+                <button class="btn btn-primary logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        <a href="#" id="createStaffAccountLink">Create Staff Account</a>
+        <h3>Bank Staff Details</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Staff Name</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th># Requests Handled</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="staffDetailsBody">
+                <!-- Dynamic content will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/one.js"></script>
+</body>
+</html>
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const loggedInUser = "MangaRao (Admin)"; // Example user info; in practice, fetch this from the server/session
+    document.getElementById("loggedInUser").innerText = loggedInUser;
+
+    // Example staff details; in practice, fetch this from the server/database
+    const staffDetails = [
+        { id: 12345, name: "John Doe", department: "Accounting", position: "Manager", requestsHandled: 50, status: "Active" },
+        { id: 67890, name: "Jane Smith", department: "Finance", position: "Accountant", requestsHandled: 30, status: "Inactive" },
+        { id: 13579, name: "Michael Johnson", department: "Operations", position: "Officer", requestsHandled: 25, status: "Active" }
+    ];
+
+    const staffDetailsBody = document.getElementById("staffDetailsBody");
+
+    staffDetails.forEach(staff => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${staff.id}</td>
+            <td>${staff.name}</td>
+            <td>${staff.department}</td>
+            <td>${staff.position}</td>
+            <td>${staff.requestsHandled}</td>
+            <td>${staff.status}</td>
+            <td><button class="btn btn-primary" onclick="editStaff(${staff.id})">Edit</button></td>
+        `;
+
+        staffDetailsBody.appendChild(row);
+    });
+
+    document.getElementById("createStaffAccountLink").addEventListener("click", function (e) {
+        e.preventDefault();
+        // Redirect to the staff account creation page or open a modal
+        alert("Redirecting to create staff account...");
+    });
+});
+
+function editStaff(staffId) {
+    // Redirect to the edit staff account page with the staffId or open a modal
+    alert(`Editing staff account with ID: ${staffId}`);
+}
+
+function logout() {
+    // Implement logout functionality
+    alert("Logging out...");
+    // Redirect to login page
+    window.location.href = "login.html";
+}
