@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Bank Staff Account</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <span id="loggedInUser"></span>
+                <button class="btn btn-primary" onclick="goHome()">Home</button>
+                <button class="btn btn-primary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        <h2>Create Bank Staff Account</h2>
+        <form id="createStaffForm">
+            <div class="form-group">
+                <label for="firstName">First Name: *</label>
+                <input type="text" class="form-control" id="firstName" required>
+                <div class="error" id="firstNameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name: *</label>
+                <input type="text" class="form-control" id="lastName" required>
+                <div class="error" id="lastNameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Id: *</label>
+                <input type="email" class="form-control" id="email" required>
+                <div class="error" id="emailError"></div>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth: *</label>
+                <input type="date" class="form-control" id="dob" required>
+                <div class="error" id="dobError"></div>
+            </div>
+            <div class="form-group">
+                <label for="department">Department: *</label>
+                <select class="form-control" id="department" required>
+                    <option value="">Select Department</option>
+                    <option value="Accounting">Accounting</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Operations">Operations</option>
+                </select>
+                <div class="error" id="departmentError"></div>
+            </div>
+            <div class="form-group">
+                <label for="position">Position: *</label>
+                <select class="form-control" id="position" required>
+                    <option value="">Select Position</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Accountant">Accountant</option>
+                    <option value="Officer">Officer</option>
+                </select>
+                <div class="error" id="positionError"></div>
+            </div>
+            <button type="button" class="btn btn-success" onclick="validateAndCreateAccount()">Create Account</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </form>
+        <div id="successMessage" class="mt-3" style="display: none;">
+            <div class="alert alert-success">Staff account successfully created!</div>
+        </div>
+    </div>
+
+    <script src="js/one.js"></script>
+</body>
+</html>
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const loggedInUser = "MangaRao (Admin)"; // Example user info; in practice, fetch this from the server/session
+    document.getElementById("loggedInUser").innerText = loggedInUser;
+});
+
+function goHome() {
+    // Redirect to admin home page
+    window.location.href = "admin_dashboard.html";
+}
+
+function logout() {
+    // Implement logout functionality
+    alert("Logging out...");
+    // Redirect to login page
+    window.location.href = "login.html";
+}
+
+function validateAndCreateAccount() {
+    let isValid = true;
+
+    // Clear previous error messages
+    document.getElementById("firstNameError").innerText = "";
+    document.getElementById("lastNameError").innerText = "";
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("dobError").innerText = "";
+    document.getElementById("departmentError").innerText = "";
+    document.getElementById("positionError").innerText = "";
+
+    // Get form values
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const dob = document.getElementById("dob").value;
+    const department = document.getElementById("department").value;
+    const position = document.getElementById("position").value;
+
+    // Validate first name (minimum 2 characters)
+    if (firstName.length < 2) {
+        document.getElementById("firstNameError").innerText = "First name must be at least 2 characters long.";
+        isValid = false;
+    }
+
+    // Validate last name (minimum 2 characters)
+    if (lastName.length < 2) {
+        document.getElementById("lastNameError").innerText = "Last name must be at least 2 characters long.";
+        isValid = false;
+    }
+
+    // Validate email (standard email format)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerText = "Please enter a valid email address.";
+        isValid = false;
+    }
+
+    // Validate date of birth (ensure date is selected)
+    if (!dob) {
+        document.getElementById("dobError").innerText = "Please select a date of birth.";
+        isValid = false;
+    }
+
+    // Validate department (ensure selection is made)
+    if (!department) {
+        document.getElementById("departmentError").innerText = "Please select a department.";
+        isValid = false;
+    }
+
+    // Validate position (ensure selection is made)
+    if (!position) {
+        document.getElementById("positionError").innerText = "Please select a position.";
+        isValid = false;
+    }
+
+    if (isValid) {
+        // Generate staff ID (for demonstration, we'll use a random number)
+        const staffId = Math.floor(Math.random() * 100000);
+
+        // Generate password (first 2 characters of last name, '@', and 4 digits of birth year)
+        const birthYear = new Date(dob).getFullYear();
+        const password = lastName.substring(0, 2) + '@' + birthYear;
+
+        // Display success message
+        document.getElementById("successMessage").style.display = "block";
+
+        // Log the details (for demonstration purposes)
+        console.log({
+            staffId,
+            firstName,
+            lastName,
+            email,
+            dob,
+            department,
+            position,
+            password
+        });
+
+        // In practice, send this data to the server for account creation
+    }
+}
+
+
+
+
