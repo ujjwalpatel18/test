@@ -1,0 +1,50 @@
+ArrayIndexOutOfBoundsException
+
+ArrayIndexOutOfBoundsException occurs when the program tries to access the array beyond its size. 
+
+Write a program to manipulate array operation by handling ArrayIndexOutOfBoundsException
+
+Create an array of size 100 and assume it as seat array. Get the tickets to be booked from the user and handle any exception that occurs in Main Class. At last display all the tickets booked.
+ 
+The link to download the template code is given below
+Code Template
+
+Input and Output format:
+
+The first line of input consists of an integer which corresponds to the number of seats to be booked.
+The next n lines of input consist of the integer which corresponds to the seat number. The seat number starts from 1 to 100.
+If the exception is thrown, then display the exception with the index number. Else display all the tickets booked
+Refer to sample Input and Output for formatting specifications.
+
+[All Texts in bold corresponds to the input and rest are output]
+
+Sample Input and Output 1:
+
+Enter the number of seats to be booked:
+5
+Enter the seat number 1
+23
+Enter the seat number 2
+42
+Enter the seat number 3
+65
+Enter the seat number 4
+81
+Enter the seat number 5
+100
+The seats booked are:
+23
+42
+65
+81
+100
+
+Sample Input and Output 2:
+
+Enter the number of seats to be booked:
+4
+Enter the seat number 1
+12
+Enter the seat number 2
+101
+java.lang.ArrayIndexOutOfBoundsException: 100
